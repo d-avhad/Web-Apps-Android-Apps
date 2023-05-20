@@ -1,0 +1,668 @@
+
+
+<!--  referred bootstrap functionalities from w3schools: https://www.w3schools.com/bootstrap5/bootstrap_forms.php  -->
+<!--referred https://getbootstrap.com/docs/5.0/components/card/ for card -->
+<head>
+  
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <script src="https://maps.googleapis.com/maps/api/js?key=your key"></script>
+  
+  <style>
+ 
+/* for desktop */ 
+
+@media screen and (max-width: 5000px) {
+
+
+.design_card {
+
+color:black;
+
+
+}
+
+
+.design_head {
+
+
+width:60%;
+margin-left:auto;
+margin-right:auto;
+
+}
+
+
+
+
+.design_button {
+
+width:20%;
+ margin-left:auto; 
+ margin-right:auto;
+ margin-top:10px;
+
+
+
+}
+ 
+
+
+
+.matStyling {
+
+border: none;
+margin-left:auto;
+margin-right:auto;
+background-color:white; 
+ width:60%;
+
+
+
+}
+ 
+
+	
+	.box_div {
+	
+	height:100vh;
+	
+	}
+
+
+	 .box1 {		
+		background:white;
+		width:40%;
+		
+	  }
+	  
+	  .bg-image {
+	  
+		  background-image: url("./assets/img/city.jpg")  ;
+		  background-repeat:no-repeat ; 
+		  height:100vh;
+		  background-size: cover;
+		  
+	  
+	  }
+	  
+	  .my_table {
+	  
+		  width:75%;
+		  margin:auto;
+	    
+	  }
+	  
+	  .my_table_image {
+	  
+		  width:80px;
+		  height:80px;
+	  
+	  }
+	  
+	  
+}
+ 
+
+/* for mobile */ 
+  
+ @media screen and (max-width: 992px) {
+ 
+ 
+ 
+.design_head {
+
+
+width:90%;
+margin-left:auto;
+margin-right:auto;
+
+}
+ 
+ 
+ 
+ 
+.design_card {
+
+width:100%;
+
+
+}
+ 
+.design_button {
+
+width:50%;
+ margin-left:auto; 
+ margin-right:auto;
+ margin-top:10px;
+
+
+}
+ 
+ 
+ 
+ 
+.matStyling {
+
+border: none;
+margin-left:auto;
+margin-right:auto;
+background-color:white; 
+width:90%;
+
+
+
+}
+ 
+ 
+ .box_div {
+	
+	 height:100vh;
+	 width: 100vw;
+	 background-size:cover;
+     
+	
+	}
+ 
+ 
+ 
+	 .box1 {	
+			background:white;
+			width:90%;
+		
+	  }
+	  
+	  .bg-image {
+	  	  
+		  background-image: url("./assets/img/city.jpg")  ;
+		 background-size: cover; 
+		  height:100vh;
+		  width: 100vw;
+		  background-position: center, center;
+		  background-repeat:no-repeat ;
+		 opacity:75%; 
+	  
+	  }
+  
+  
+} 
+  
+ a {
+ text-decoration:none;
+ color:black;
+ }
+  
+ 
+
+
+::ng-deep.mat-tab-label:not(.mat-tab-disabled),
+::ng-deep.mat-tab-label.cdk-keyboard-focused:not(.mat-tab-disabled) {
+
+  background-color: #FDDA0D;
+  color: grey;
+ opacity:1;
+  
+}
+
+
+::ng-deep.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
+::ng-deep.mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
+  background-color: #FDDA0D;
+  color: black;
+  opacity: 1;
+}
+
+
+
+
+  
+::ng-deep.mat-tab-label{
+ min-width: 252px!important;
+ 
+ 
+}  
+
+
+
+
+
+.social_style {
+
+font-size:20px;
+color:#008AD8;
+ margin-left:5px;
+
+
+}
+
+
+.navbar > a:hover, .navbar > a:focus {
+    background-color: transparent;
+    color: black;
+}
+
+
+
+  
+  </style>
+  
+  
+</head>
+
+
+<!--<div [style.backgroundImage]="'url('+ imagSource +')'"> -->
+<div class="box_div" [ngStyle]="{ background : 'linear-gradient(0deg, rgba(0,0,255,0.15) 25%,rgba(0,0,255,0.15) 25% , rgba(255,255,255,0.6) 90%) no-repeat fixed, url(assets/img/city.jpg) no-repeat fixed ' }"  > 
+
+
+
+<nav  class="navbar navbar-light" >
+  <form class="container-fluid justify-content-end">
+    <button  routerLink="/search" class="btn btn-outline-success me-2" type="button">Search</button>
+    <button routerLink="/bookings"  class="btn btn-outline-success me-2" type="button">Bookings</button>
+  </form>
+</nav>
+
+<br>
+<br>
+
+
+<div  class="container border border-2 rounded  box1 container-max-widths"   ng-app="myApp" ng-controller="myAppCtrl">
+
+<br>
+  <h4 class="text-center">Business search</h4>
+  
+  <form   ngNativeValidate  [formGroup]="searchForm"  (ngSubmit)="onSubmit(searchForm.value)">
+  
+ <!--refered site suggested by professor : https://www.freakyjolly.com/mat-autocomplete-with-http-api-remote-search-results/-->
+	<label for="keyword" class="form-label">Keyword<span style="color:red">*</span></label>
+ 
+    <input type="text" class="form-control"  [(ngModel)]="selectedMovie" [matAutocomplete]="auto" 
+      [formControl]="searchMoviesCtrl" (keyup)="yelpAutocomplete()" formControlName="keyword"  name="keyword" required>
+
+    <mat-autocomplete  #auto="matAutocomplete">
+      <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
+      <ng-container *ngIf="!isLoading">
+        <mat-option *ngFor="let  v of cat_arr" [value]="v">
+          <span>{{v}}</span>
+        </mat-option>
+      </ng-container>
+    </mat-autocomplete>
+  
+  
+  
+  
+  <div>
+		<div class="row">
+		
+			<div class="col-12 col-sm-6">
+			
+				<label for="distance" class="form-label">Distance</label> 
+				<input type="text" class="form-control" name="distance" value="10"  formControlName="distance">
+			
+			</div>
+			
+			<div class="col-12 col-sm-6">
+			
+				<label for="category" class="form-label">Category<span style="color:red">*</span></label> 
+				 <select class="form-select"  name="category"   formControlName="category">
+				  <option>Default</option>
+				  <option>Arts & Entertainment</option>
+				  <option>Health & Medical</option>
+				  <option>Hotels & Travel</option>
+				  <option>Food</option>
+				  <option>Professional Services</option>
+				</select>
+							
+			</div>
+		
+		
+		</div>
+	
+ </div>
+ 
+ <div >
+    <label for="location" class="form-label">Location<span style="color:red">*</span></label> 
+    <input #loc_id_val type="text" class="form-control" name="location" formControlName="location" required>
+  </div>
+ 
+ <div class="form-check">
+      <input type="checkbox" class="form-check-input" formControlName="check" name="check"  (change)="evaluateCheck($event)" />
+      <label class="form-check-label" for="check">Auto-detect my location</label>
+ </div>
+ 
+ <br>
+ 
+ <div    class="row">
+   
+	 <div class="text-center">
+	  <button  style="width:80px;" type="submit" class="btn btn-danger  me-3 " >Submit</button>
+	  <button  style="width:80px;" type="button" class="btn btn-primary ms-2 "  (click)='resetPage()' >Clear</button>
+	  </div> 
+  
+ </div>
+ 
+  
+ </form>
+ <br><br>
+ 
+ </div>   <!--box div ends here -->
+ 
+ <br>
+ 
+<div #dataInfo  class="text-center" style="display:none;backgroud-color:white">
+ <button  type="button" class="btn btn-light col-4 rounded-4" style="color:red; opacity:1" disabled>No results available</button>
+ </div>
+ 
+<div  [ngStyle]="{ background : 'linear-gradient(0deg, rgba(0,0,255,0.15) 25%,rgba(0,0,255,0.15) 25% , rgba(255,255,255,0.6) 90%) no-repeat fixed, url(assets/img/city.jpg) no-repeat fixed' }">
+ 
+ <table #myTable  style="background-color:white; display:none" class="table  table-striped border border-2  my_table text-center " >
+    <thead>
+        <tr>
+		
+            <th>#</th>
+            <th>Image</th>
+            <th>Business Name</th>
+			<th>Rating</th>
+			<th>Distance (miles)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="text-center" *ngFor="let bus of res_json ; let i=index">
+			<td  scope="row" class="test-center"><a href="javascript:void(0)"  (click)="callCardDetails(i)">{{(i+1)}}</a></td>			
+            <td class="test-center"><a href="javascript:void(0)" (click)="callCardDetails(i)" ><img class="my_table_image" [src]="safe_url[i]"  alt="No Image"/></a></td>			
+			<td class="test-center"><a href="javascript:void(0)"  (click)="callCardDetails(i)">{{res_json[i]['bus_name']}}</a></td>
+			<td class="test-center"><a href="javascript:void(0)"  (click)="callCardDetails(i)">{{res_json[i]['rating']}}</a></td>
+			<td class="test-center"><a href="javascript:void(0)"  (click)="callCardDetails(i)">{{res_json[i]['dist']}}</a></td>
+           
+        </tr>
+    </tbody>
+</table>
+ <br>
+</div> 
+ 
+ 
+ <!--card starts here-->
+ 
+ <div  style="display:none"  #final_card [ngStyle]="{ background : 'linear-gradient(0deg, rgba(0,0,255,0.15) 25%,rgba(0,0,255,0.15) 25% , rgba(255,255,255,0.6) 90%) no-repeat fixed, url(assets/img/city.jpg) no-repeat fixed' }">
+ <br>
+ 
+ <div class="row design_head" style="background-color:white; ; height:50px">
+	<div class="col-1">
+	
+		<button type="button" class="btn btn-link " style="color:black" (click)=goBack()><span class="bi bi-arrow-left"></span></button>
+	</div>
+ 
+ 
+	<div class="col-6 col-sm-8  mx-auto"  >
+		<h6 class="text-center"  >{{name_str}}</h6>
+	</div>
+ 
+ </div>
+ 
+ <mat-tab-group dynamicHeight   mat-align-tabs="center"  class="matStyling"  >
+ 
+ 
+ 
+  <mat-tab  label="Business Details" >
+  
+  
+		 <mat-card #matData>
+		 
+		 <div class="row text-center" >
+		 
+		 <div  class="col-6 text-center  design_card">
+	 
+		 <mat-card-title style="font-size:15px">Address</mat-card-title>
+		 <mat-card-subtitle style="font-size:12px">{{addr}}</mat-card-subtitle>
+		 
+		 </div>
+		 
+		 
+		 <div class="col-6 text-center design_card">
+		  <mat-card-title style="font-size:15px">Category</mat-card-title>
+		 <mat-card-subtitle style="font-size:12px">{{cat}}</mat-card-subtitle>
+		 </div> 
+		 
+		 </div>  
+		 
+		 
+		 <div class="row text-center" >
+		 
+		 <div class="col-6 text-center design_card">
+	 
+		 <mat-card-title style="font-size:15px">Phone</mat-card-title>
+		 <mat-card-subtitle style="font-size:12px">{{phone}}</mat-card-subtitle>
+		 
+		 </div>
+		 
+		 
+		 <div class="col-6  text-center design_card">
+		  <mat-card-title style="font-size:15px">Price range</mat-card-title>
+		 <mat-card-subtitle style="font-size:12px">{{price}}</mat-card-subtitle>
+		 </div> 
+		 
+		 </div>  
+		 
+		 
+		 
+		 <div class="row text-center" >
+		 
+		 <div class="col-6 text-center design_card">
+	 
+		 <mat-card-title style="font-size:15px">Status</mat-card-title>
+		 <mat-card-subtitle #statID style="font-size:12px">{{stat}}</mat-card-subtitle>
+		 
+		 </div>
+		 
+		 
+		 <div class="col-6  text-center design_card">
+		  <mat-card-title style="font-size:15px">Visit yelp for more</mat-card-title>
+		 <mat-card-subtitle style="font-size:12px ;color:blue"><a href="{{bus_url}}" target="new" style="color:blue">Business link</a></mat-card-subtitle>
+		 </div> 
+		 
+		 </div>  
+		 
+		 
+		 <div class="row  design_button " >
+		 
+		
+		 <button   #book_res type="button" class="btn btn-danger" (click)="resetModal()" data-bs-toggle="modal" data-bs-target="#reservation">Reserve Now</button>
+		 
+		 <button  #cancel_res style="font-size:12px; display:none" type="button" class="btn btn-primary" (click)="cancelReservation()" >Cancel Reservation</button>
+		 
+		 </div>
+		 
+		 <!--modal reservation form-->
+		
+
+		 
+		 
+	 
+		 <!--modal ends here-->
+		 
+		 
+		 
+		  <div class="row text-center" style="  margin-left:auto; margin-right:auto; margin-top:10px;">
+		 
+			<p style="font-size:12px;">Share on <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Check%20{{post_bus_name}}%20on%20Yelp%0A&url={{bus_url}}" data-size="large" target="_new"><i class="bi bi-twitter social_style"> </i></a>
+			
+			<!-- refered : https://stackoverflow.com/questions/12547088/how-do-i-customize-facebooks-sharer-php -->
+			
+			<a href="http://www.facebook.com/sharer/sharer.php?u={{bus_url}}" target="_new"><i class="bi bi-facebook social_style" ></i></a> </p>
+		 
+		 </div>
+		 
+		 
+		 <!--carasoul starts   taken reference from https://getbootstrap.com/docs/5.0/components/carousel/-->
+		<div id="carouselExampleInterval"  class="carousel carousel-dark slide" data-bs-ride="carousel">
+		
+  <div class="carousel-inner"  >
+    <div   class="carousel-item active "    data-bs-interval="8000" *ngFor="let pic of photo" >
+      <img   src="{{pic}}"  style="width:200px;height:200px"  class="d-block  mx-auto" alt="...">
+    </div>
+    
+  </div>
+  <button class="carousel-control-prev"  type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next"  type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+		 
+		 
+		 <!--carasoul ends-->
+		 
+		 </mat-card>
+  
+  </mat-tab>
+  
+ <!--location starts, reference from : https://medium.com/swlh/angular-google-map-component-basics-and-tips-7ff679e383ff --> 
+  
+  <mat-tab label="Map location">
+  
+  <div style="margin-top:20px; margin-bottom:20px">
+  
+   <div class="my-google-map">
+	   <google-map height="400px" width="100%" [options]="mapOptions">
+		  <map-marker [position]="marker"></map-marker>
+	   </google-map>
+  </div>
+
+</div>
+  
+  </mat-tab>
+  
+ <!--end map--> 
+  
+  <mat-tab  label="Reviews">
+  
+  <table class="table table-striped ">
+  <tbody>
+  <tr *ngFor="let j of rev ; let i=index">
+		<td>
+		<mat-card class="backgroud accent" style="background-color: transparent">
+		
+		<mat-card-title style="font-size:15px">{{rev[i]['user']['name']}}</mat-card-title>
+		<mat-card-subtitle style="font-size:12px;color:black;">Rating:{{rev[i]['rating']}}/5</mat-card-subtitle>
+		<mat-card-subtitle  style="font-size:12px;color:black">{{rev[i]['text']}}</mat-card-subtitle>
+		<mat-card-subtitle   style="font-size:12px;color:black">{{rev[i]['time_created']}}</mat-card-subtitle>
+		
+		</mat-card>
+		</td>
+  
+  
+  </tr>
+  </tbody>
+  
+  
+  </table>
+  
+  
+  
+  
+  </mat-tab>
+  
+  
+</mat-tab-group>
+
+</div>
+
+  <!--card  ends -->
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+</div>   <!--body div ends here-->
+
+<!--modal body: referenced from : https://getbootstrap.com/docs/5.0/components/modal/-->
+ 
+<div class="modal fade" id="reservation" data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Reservation Form</h4>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+	  <h5 class="text-center">{{name_str}}</h5>
+	  <form novalidate [formGroup]="reservation_form"  (ngSubmit)="reserveSubmit(reservation_form.value)" >
+	  
+			  <label  for="user_email" class="form-label">Email</label> 
+			<!--  refered from https://mailtrap.io/blog/angular-email-validation/  -->
+			  
+			  
+			 <input name="user_email" [class.is-invalid] = "reservation_form.get('primaryEmail').invalid && reservation_form.get('primaryEmail').touched"
+		type="email" class="form-control" formControlName="primaryEmail"  required>
+
+
+			<div *ngIf="(primEmail.invalid && primEmail.touched) || primEmail.dirty"> 
+			<small *ngIf="primEmail.errors?.['required']" class="text-danger">Email is required</small>
+			<!--question mark(?) is a safe navigation operator-->
+			<small *ngIf="primEmail.errors?.['pattern']" class="text-danger">Email must be a valid email address</small>
+			</div> 
+
+
+		   <label  for="user_date" class="form-label ">Date</label> 
+		  
+		  <input type="date"  [class.is-invalid]= "userDate.invalid && userDate.touched" formControlName="user_date" name="user_date"  [min]="currentDate"  class=" form-control " required> 
+		  
+		  <div *ngIf="((userDate.invalid && userDate.touched) || userDate.dirty)"> 
+		  <small *ngIf="userDate.errors?.['required']" class="text-danger">Date is required</small>
+		  <small #dateid style="display:none"  class="text-danger">Date is required</small>
+		  </div>
+		  
+		  
+		  <label for="user_time" class="form-label">Time</label> 
+			<div  class="row">
+			
+				<div class="col-3">
+					<select   [class.is-invalid]= "userTime.invalid && userTime.touched" class="form-select"  name="category" formControlName="user_time" required>
+					<option value="" selected disabled hidden></option>
+					<option  *ngFor="let num of [10,11,12,13,14,15,16,17]">{{num}}</option>
+					</select>
+				</div>
+				<div class="col-1">:</div>
+				<div class="col-3">			
+					<select [class.is-invalid]= "userMin.invalid && userMin.touched" class="form-select"  name="category" formControlName="user_minutes" [value]=""  required>
+					<option value="" selected disabled hidden></option>
+					<option  *ngFor="let num1 of ['00',15,30,45]">{{num1}}</option>
+					</select>
+				</div>
+				<div class="col-1"><i class="bi bi-clock"></i></div>	
+				
+			</div>
+	  
+		 <div class="row text-center">
+		 
+		   <button   [class.is-invalid] = "reservation_form.get('primaryEmail').invalid"    style="width:80px; margin-top:20px;margin-left:auto; margin-right:auto" type="submit" class="btn btn-danger   " >Submit</button>
+		   </div>
+	 </form>
+	  
+       
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button #modalClose type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>

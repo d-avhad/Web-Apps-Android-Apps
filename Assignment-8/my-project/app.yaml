@@ -1,0 +1,10 @@
+runtime: nodejs16
+service: frontend
+manual_scaling:
+  instances: 1
+handlers: 
+  - url: /
+    static_files: dist/my-project/index.html
+    upload: dist/my-project/index.html
+  - url: /
+    static_dir: dist/my-project

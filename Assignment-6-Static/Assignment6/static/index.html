@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+<script src="/static/hw6.js"></script>
+
+<style>
+
+body {
+  background-color: #DCDCDC;
+}
+
+.box {
+		background-color:white;
+		border-style: solid;
+		border-width: 2px;
+		width:500px;
+		height:450px;
+		margin-left:380px;
+		border-color:#999999;
+}
+
+
+.image {
+			display: block;
+			object-fit: cover;
+			width:500px;
+			height:150px;
+			object-position: 0px -173px;			
+			margin:auto;
+			
+			
+		}	
+		
+.txt {
+
+color:white;
+margin-top:-125px;
+text-align:left;
+margin-left:30px;
+font-family: Arial;
+font-weight:bold;
+
+
+}
+
+label {
+color:#4863A0;
+margin-left:30px;
+font-family: Arial;
+font-size:13px;
+
+}
+
+
+.sp {
+margin-left:30px;
+margin-top:5px;
+margin-bottom:20px;
+width:430px;
+border-radius:0px;
+
+
+}
+
+hr {
+margin-left:30px;
+margin-top:0px;
+width:435px;
+border: none;
+height: 1px;
+background-color:#4863A0;
+
+
+}
+
+input {
+  border-top-style: ridge;
+  border-right-style: ridge;
+  border-left-style: ridge;
+  border-width:1px;
+  height:20px;
+  border-color:grey;
+  
+}
+
+
+.but  {
+  background-color:#4863A0;
+  border: none;
+  color: white;
+  border-bottom-style: ridge;
+  border-color:black;
+  text-decoration: none;
+  border-width:3px;
+  margin-left:30px;
+  width:100px;
+  height:45px;
+}
+
+.but:hover
+{
+  background-color: #568cb2;
+}
+
+.but1 {
+
+border: none;
+color: white;
+border-bottom-style: ridge;
+background-color:#FFAE42;
+border-color:red; 
+margin-left:1px;
+text-decoration: none;
+width:100px;
+height:45px;
+border-width:3px;
+
+
+}
+
+.but1:hover {
+background-color: #ff7602;
+}
+
+option {
+
+background-color: #DCDCDC;
+}
+
+/* for table styling */
+
+
+table {
+
+  border-collapse: collapse;
+  width: 1000px;
+  border: 0.5px solid #DCDCDC;
+  margin-left:180px;
+  margin-right:auto;
+  font-family: Arial;
+  font-size:13px;
+}
+
+th {
+  cursor: pointer;
+  border: 0.5px solid #DCDCDC;
+  background-color:#4863A0;
+}
+
+th, td {
+  text-align: center;
+  padding: 16px;
+  border: 0.5px solid #DCDCDC;
+}
+
+tr {
+
+height:130px;
+}
+
+td {
+background-color:white;
+
+}
+
+h1 {
+margin-top:25px;
+font-size:15px;
+font-family: Arial;
+text-align:center;
+}
+
+.card {
+
+margin-top:50px;
+width:700px;;
+
+background-color:white;
+border-style: solid;
+border-width: 2px;
+
+height:700px;
+margin-left:280px;
+margin-right:auto;
+border-color:#999999;
+}
+
+.hr1 {
+
+margin-left:auto;
+margin-right:auto;
+width:650px;
+
+border: none;
+height: 1px;
+background-color:#DCDCDC;
+
+
+}
+
+
+.l1 {
+
+color:black;
+margin-left:0px;
+font-family: Arial;
+font-size:15px;
+font-weight:bold;
+
+}
+
+
+.card_btn {
+
+margin-left:0px;
+border-radius:20px; 
+background-color: #2E8B57;
+border:none;
+height:25px;
+width:80px;
+margin-top:5px;
+font-size:10px;
+
+
+}
+
+
+
+.card_table {
+
+width:580px;
+margin-left:0px;
+border:none;
+
+}
+
+.card_table td {
+
+text-align:left;
+border:none;
+}
+
+.card_table_td_width {
+
+width:300px;
+
+}
+
+
+
+
+.card_table tr {
+
+height:40px;
+border:none;
+}
+
+
+.flex-container {
+  display: flex;
+  
+}
+
+.end_img {
+
+border-color:#999999;
+border-style: solid;
+border-width: 1px;
+
+}
+
+</style>
+
+</head>
+
+
+
+
+<body>
+
+<div class="box">
+
+	<img class="image" src="/static/banner.jpeg" alt="Image" >
+	
+	<p class="txt" style="font-size:23px; margin-bottom:5px">Business Search</p>
+	<p1 class="txt" style="font-size:15px;">Fill out the form to get business near you!</p1>
+	
+	
+	
+	<div style="margin-top:50px">
+    <form id="main_form" action="javascript:helperfunc()">
+	
+        <label for="keyword">Keyword<span style="color:red">*</span></label>
+		<br>
+        <input class="sp"  type="text" id="keyword"  autocomplete="off" required/>
+        <br>
+		
+		<!--**label for distance**-->
+		<label for="distance">Distance(miles)</label>
+		
+		<!--##label for Category##-->
+		<label style="margin-left:125px;" for="category">Category<span style="color:red">*</span></label>
+		<br>
+		
+		<!--**input for distance**-->
+		<input style="margin-left:30px;margin-top:5px;border-radius:0px; width:150px" type="text"  id="distance" value="10"/>
+		
+		
+		<!--##input for Category##-->
+		<select style="background-color:white; margin-left:60px; width:214px; height:24px; margin-top:5px; border-style:solid;border-width:1px;border-color:grey" id="category" name="cat" value="Default"  required>
+			<option value="all">Default</option>
+			<option value="Arts & Entertainment">Arts & Entertainment</option>
+			<option value="Health & Medical">Health & Medical</option>
+			<option value="Hotels & Travel">Hotels & Travel</option>
+			<option value="Food">Food</option>
+			<option value="Professional Services">Professional Services</option>
+		</select>		
+		<br>
+		<br>
+		<label for="location">Location<span style="color:red"> *</span></label>
+		<br>
+        <input class="sp"  type="text" id="location"  autocomplete="off" required/>
+        
+		<hr>
+				
+		<label  style="font-size:15px;" for="check">Want us to auto-detect your location?Check here</label>
+		
+		
+		
+		<input style="color:black; height:10px ;width:13px; margin-top:10px; margin-left:0px; " type="checkbox" id="check" onclick="toggleLocationBox(this.checked,'location')" /> 
+		
+		<br>
+		<br>
+		
+			
+        <input  class="but" type="submit"  value="SUBMIT" id="submit_button" />
+        <input  class="but1" type="button" value="CLEAR" id="clear_button" onclick="defaultFields()"/>
+		
+    </form>
+	
+	</div>	
+	
+</div>
+
+<!--main box div ends here-->
+
+<!--table div opens here-->
+<div style="margin-top:100px" >
+	<table id="data_table" style="visibility:hidden">
+	<thead>
+	  <tr style="height:50px"> 
+		<th style="width:20px; cursor:default;">No</th>
+		<th style="width:110px; cursor:default">Image</th>
+		<th style="width:500px" onclick="sortTable(5,'yes')">Business Name </th>
+		<th style="width:120px" onclick="sortTable(3,'no')">Rating</th>
+		<th style="width:150px" onclick="sortTable(4,'no')">Distance (miles)</th>
+		<th style="width:2px; visibility:hidden">Hidden</th>
+	  </tr>
+	</thead>
+	<tbody>
+	
+	</tbody>
+	 
+<!--	  
+	  <tr>
+		<td>1</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	  </tr>
+	  
+	  <tr>
+		<td>2</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	  </tr>
+-->
+	 
+	</table>
+	
+</div>
+
+<!--table data ends here-->
+
+
+<div id="id_card1" class="card"  style="visibility:hidden" >
+
+<h1 id="card_heading"></h1>
+<hr id="card_hr" class="hr1">
+
+
+
+<table class="card_table" >
+
+	<tr>
+		<td>
+		<label id="label_s1" class="l1" for="card_status"  style="margin-left:5px">Status</label>
+		<br>
+		<button class="card_btn"; id="card_status" style="margin-left:5px" ></button>
+		</td>
+
+		<td class="card_table_td_width">
+		<label id="label_c1" class="l1"  for="card_cat">Category</label>
+		<p id="card_cat" style="margin-top:2px; font-size:10px;"></p>
+		</td>
+	</tr>
+	
+	
+	<tr>
+		<td>
+		<label style="margin-left:5px" id="label_a1" class="l1" for="card_addr">Address</label>
+		<br>
+		<p id="card_addr" style="margin-top:2px; font-size:10px; margin-left:5px"></p>
+		</td>
+
+		<td>
+		<label id="label_p1"  class="l1" for="card_num">Phone Number</label>
+		<p id="card_num" style="margin-top:2px; font-size:10px; "></p>
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+		<label  style="margin-left:5px" id="label_t1" class="l1" for="card_trans">Transactions Supported</label>
+		<br>
+		<p  style="margin-left:5px" id="card_trans" style="margin-top:2px; font-size:10px;"></p>
+		</td>
+
+		<td>
+		<label id="label_price1" class="l1" for="card_price">Price</label>
+		<p id="card_price" style="margin-top:2px; font-size:10px;"></p>
+		</td>
+	</tr>
+
+
+	<tr>
+		<td>
+		<label style="margin-left:5px" id="label_info1" class="l1" for="card_info">More info</label>
+		<br>
+		<a  style="margin-left:5px" id="card_info" target="_blank" style="font-size:10px;color:blue" href="" >Yelp</a>
+		</td>
+	</tr>
+
+
+	<tr>
+	     <td colspan="2">
+			<br>
+			<div id="uni_div" class="flex-container">
+				<div  class="end_img" style="margin-left:40px; " >
+				<img id="uni_div0" style="width:190px; height:130px;">
+				<p id="uni_p0"   style="margin-top:110px; text-align:center; visibility:hidden">Photo1
+				</div>
+				
+				<div  class="end_img">
+				<img id="uni_div1" style="width:190px; height:230px; margin-left:5px;">
+				<p id="uni_p1"  style="text-align:center;visibility:hidden">Photo2
+				</div>
+				
+				<div class="end_img">
+				<img id="uni_div2" style="width:190px; height:130px; margin-left:5px;">
+				<p id="uni_p2"  style="margin-top:110px; text-align:center; visibility:hidden">Photo3
+				</div>
+			
+			</div>
+		</td>
+	
+	</tr>
+
+
+
+
+
+</table>
+
+
+
+
+
+
+
+</div>
+
+
+
+</body>
+</html>

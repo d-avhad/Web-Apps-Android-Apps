@@ -1,0 +1,86 @@
+<div style="height:100vh" [ngStyle]="{ background : 'linear-gradient(0deg, rgba(0,0,255,0.15) 25%,rgba(0,0,255,0.15) 25% , rgba(255,255,255,0.6) 90%) no-repeat fixed, url(assets/img/city.jpg) no-repeat fixed' }"  > 
+
+
+
+<nav class="navbar navbar-light" >
+  <form class="container-fluid justify-content-end">
+    <button  routerLink="/search" class="btn btn-outline-success me-2" type="button">Search</button>
+    <button routerLink="/bookings"  class="btn btn-outline-success me-2" type="button">Bookings</button>
+  </form>
+</nav>
+
+
+<div #display_info  *ngIf="track_counter==0"  class="text-center" style="background-color:white">
+ <button  type="button" class="btn btn-light col-4 rounded-4" style="color:red;opacity:1" disabled>No reservations  to show</button>
+ </div>
+ 
+  <div #res_table  *ngIf="track_counter==1 ">
+ <h6 class="text-center">List of  your reservations</h6>
+  
+  <table  style="background-color:white; width:50%;margin:auto" class="table table-responsive-sm table-striped border border-2 text-center "  >
+  
+    <thead>
+        <tr>
+		
+            <th>#</th>
+            <th>Business Name</th>
+			<th>Date</th>
+			<th>Time</th>
+			<th>E-mail</th>
+			<th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="text-center" *ngFor="let ele of arr; let i=index" >
+			<td  scope="row" class="text-center"><strong>{{i+1}}</strong></td>			
+			<td class="text-center">{{arr[i]['name']}}</td>
+			<td class="text-center">{{arr[i]['user_date']}}</td>
+			<td class="text-center">{{arr[i]['user_hour']}}:{{arr[i]['user_min']}}</td>
+			<td class="text-center">{{arr[i]['mail']}}</td>
+			<td class="text-center"><button class="bg-light border-0" type="button" (click)=deleteBookings(i,true)><i class="bi bi-trash"></i></button></td>
+           
+        </tr>
+    </tbody>
+</table>
+
+</div>
+  
+ 
+ 
+ 
+ <div   *ngIf="second_counter==1">
+ <h6 class="text-center">List of  your reservations</h6>
+  
+  <table  style="background-color:white; width:50%;margin:auto" class="table table-responsive-sm table-striped border border-2 text-center " >
+  
+    <thead>
+        <tr>
+		
+            <th>#</th>
+            <th>Business Name</th>
+			<th>Date</th>
+			<th>Time</th>
+			<th>E-mail</th>
+			<th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="text-center" *ngFor="let ele of arr; let i=index" >
+			<td  scope="row" class="text-center"><strong>{{i+1}}</strong></td>			
+			<td class="text-center">{{arr[i]['name']}}</td>
+			<td class="text-center">{{arr[i]['user_date']}}</td>
+			<td class="text-center">{{arr[i]['user_hour']}}:{{arr[i]['user_min']}}</td>
+			<td class="text-center">{{arr[i]['mail']}}</td>
+			<td class="text-center"><button class="bg-light border-0" type="button" (click)=deleteBookings(i,true)><i class="bi bi-trash"></i></button></td>
+           
+        </tr>
+    </tbody>
+</table>
+
+</div>
+  
+  
+  
+  
+  
+ </div>  <!--main div ends-->
