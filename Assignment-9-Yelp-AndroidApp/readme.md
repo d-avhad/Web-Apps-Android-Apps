@@ -1,3 +1,3 @@
-# Link for Yelp Android app : https://youtu.be/yuCAF0jGGpk
+# Link for Yelp Android app : https://www.youtube.com/watch?v=ofbeNXVXrN0&ab_channel=DeepaAvhad
 
 The Backend (Nodejs ) is same as Assignment -8. 
